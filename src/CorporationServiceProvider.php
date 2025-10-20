@@ -2,6 +2,8 @@
 
 namespace Uiaciel\Corporation;
 
+use Livewire\Livewire;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\ServiceProvider;
 
 class CorporationServiceProvider extends ServiceProvider
@@ -17,7 +19,11 @@ class CorporationServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'corporation');
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
 
-        // Livewire::component('corporation.announcement-create', AnnouncementCreate::class);
+        foreach (File::allFiles(__DIR__ . '/Livewire') as $file) {
+            $class = 'Uiaciel\\Corporation\\Livewire\\' . $file->getFilenameWithoutExtension();
+            $alias = 'corporation.' . \Illuminate\Support\Str::kebab($file->getFilenameWithoutExtension());
+            Livewire::component($alias, $class);
+        }
 
         // Daftarkan Blade components
         $this->loadViewComponentsAs('corporation', [
