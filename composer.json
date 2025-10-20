@@ -1,0 +1,29 @@
+{
+    "name": "uiaciel/corporation",
+    "description": "Corporation Module for SuryaCMS",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "uiaciel",
+            "email": "your.email@example.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "Uiaciel\\Corporation\\": "src/"
+        }
+    },
+    "require": {
+        "php": "^8.0",
+        "laravel/framework": "^12.0"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Uiaciel\\Corporation\\CorporationServiceProvider"
+            ]
+        }
+    }
+}
