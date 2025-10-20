@@ -31,9 +31,9 @@ class AnnouncementCreate extends Component
     protected $rules = [
         'title' => 'required|min:3',
         'category' => 'required',
-        'content' => 'required',
-        'image' => 'nullable|image|max:2048',
-        'pdf' => 'nullable|mimes:pdf|max:5120',
+        'content' => 'nullable',
+        'image' => 'nullable|image|max:51200',
+        'pdf' => 'nullable|mimes:pdf|max:102400',
         'homepage' => 'required|in:Yes,No',
         'status' => 'required|in:Publish,Draf',
         'datepublish' => 'required|date',

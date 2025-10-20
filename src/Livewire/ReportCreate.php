@@ -47,8 +47,8 @@ class ReportCreate extends Component
         'title' => 'required|max:255',
         'category' => 'required|max:255',
         'content' => 'nullable',
-        'image' => 'nullable|image|max:80048',
-        'pdf' => 'required|mimes:pdf|max:80048',
+        'image' => 'nullable|image|max:51200',
+        'pdf' => 'required|mimes:pdf|max:102400',
         'datepublish' => 'required|date',
         'status' => 'nullable',
         'hit' => 'nullable',
@@ -110,7 +110,7 @@ class ReportCreate extends Component
         $report->save();
 
         session()->flash('message', 'Report created successfully.');
-        return $this->redirect('/admin/reports');
+        return $this->redirect('/admin/corporation/reports');
     }
 
     public function render()

@@ -31,6 +31,21 @@ class CorporationServiceProvider extends ServiceProvider
             \Uiaciel\Corporation\View\Components\SessionStatus::class,
         ]);
 
+        if (function_exists('register_admin_menupackage')) {
+            register_admin_menupackage('Corporation', [
+                [
+                    'label' => 'Announcements',
+                    'icon' => 'bi bi-megaphone-fill',
+                    'route' => '/admin/corporation/announcements',
+                ],
+                [
+                    'label' => 'Reports',
+                    'icon' => 'bi bi-filetype-pdf',
+                    'route' => '/admin/corporation/reports',
+                ],
+            ]);
+        }
+
         // Publish configuration
         $this->publishes([
             __DIR__ . '/../config/corporation.php' => config_path('corporation.php'),

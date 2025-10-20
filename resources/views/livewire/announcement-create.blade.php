@@ -14,41 +14,7 @@
 
     <div class="row">
         <form wire:submit.prevent="save">
-        <div class="col-xl-12">
-        @if (session()->has('error'))
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            <strong>Error!</strong> {{ session('error') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-        @endif
 
-        @if (session()->has('message'))
-        <div class="alert alert-info alert-dismissible fade show" role="alert">
-            <strong>Info!</strong> {{ session('message') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-        @endif
-
-        @if (session()->has('success'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <strong>Success!</strong> {{ session('success') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-        @endif
-
-        @if ($errors->any())
-        <div class="alert alert-warning alert-dismissible fade show" role="alert">
-            <strong>Validation Error!</strong> Please check the form for errors.
-            <ul class="mb-0">
-                @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-        @endif
-
-        </div>
         <div class="col-xl-12">
             <div class="card">
                 <div class="card-header">
@@ -134,23 +100,19 @@
 
                             <div class="mb-3">
                                 <label for="content" class="form-label fw-bold">Content</label>
-                                <textarea class="form-control" id="content" rows="3" wire:model.defer="content"></textarea>
+                                <textarea class="form-control" id="content" placeholder="Leave empty if you only want to display the file." rows="3" wire:model.defer="content"></textarea>
                                 @error('content')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
 
+                            <div class="d-grid gap-2 d-md-block">
+                               <button type="submit" class="btn btn-primary">Submit</button>
+
+                            </div>
+
                         </div>
                         <div class="col-md-6">
-                            {{-- PDF Preview --}}
-
-                            @if ($pdfPreview)
-                            <div class="mb-3">
-                                <label class="form-label fw-bold">PDF Preview:</label>
-                                <iframe src="{{ $pdfPreview }}" width="100%" height="400px"></iframe>
-                            </div>
-                            @endif
-
                             {{-- Cover Preview --}}
                             @if ($coverPreview)
                             <div class="mb-3">
@@ -159,7 +121,15 @@
                             </div>
                             @endif
 
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                        <div class="col-md-12">
+
+                              @if ($pdfPreview)
+                              <div class="mb-3">
+                                  <label class="form-label fw-bold">PDF Preview:</label>
+                                  <iframe src="{{ $pdfPreview }}" width="100%" height="400px"></iframe>
+                              </div>
+                              @endif
 
                         </div>
                     </div>
