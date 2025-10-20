@@ -10,7 +10,7 @@
         </nav>
     </header>
 
-    <x-session-status />
+    <x-corporation-session-status />
 
     <div class="row">
         <form wire:submit.prevent="save">
@@ -158,6 +158,9 @@
                                 <img src="{{ $coverPreview }}" alt="Cover Preview" class="img-fluid">
                             </div>
                             @endif
+
+                            <button type="submit" class="btn btn-primary">Submit</button>
+
                         </div>
                     </div>
 

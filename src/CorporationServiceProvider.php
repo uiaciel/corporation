@@ -2,6 +2,7 @@
 
 namespace Uiaciel\Corporation;
 
+use Livewire\Livewire;
 use Illuminate\Support\ServiceProvider;
 use Uiaciel\Corporation\View\Components\ImportExportOffcanvas;
 use Uiaciel\Corporation\View\Components\SessionStatus;
@@ -19,8 +20,10 @@ class CorporationServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'corporation');
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
 
+        Livewire::componentNamespace('Uiaciel\\Corporation\\Livewire', 'corporation');
+
         // Register components
-        $this->loadViewComponentsAs('', [
+        $this->loadViewComponentsAs('corporation', [
             ImportExportOffcanvas::class,
             SessionStatus::class,
         ]);

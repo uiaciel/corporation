@@ -1,5 +1,5 @@
 <div class="container-fluid">
-    <x-import-export-offcanvas />
+    <x-corporation-import-export-offcanvas />
 
      <header class="page-header d-flex justify-content-between align-items-center mb-3">
          <h3 class="fw-bold mb-2">Announcements
@@ -14,7 +14,7 @@
          </nav>
      </header>
 
-    <x-session-status />
+    <x-corporation-session-status />
 
 <div class="card border-0 shadow rounded">
  <div class="card-header d-flex justify-content-between align-items-center">
