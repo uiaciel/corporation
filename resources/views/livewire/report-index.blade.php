@@ -1,6 +1,6 @@
 <div class="container-fluid">
 
-    <x-import-export-offcanvas />
+    <x-corporation-import-export-offcanvas />
 
     <header class="page-header d-flex justify-content-between align-items-center mb-3">
         <div class="d-flex">
