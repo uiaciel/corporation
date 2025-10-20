@@ -3,47 +3,56 @@
 namespace Uiaciel\Corporation\Livewire;
 
 use Livewire\Component;
-use Livewire\WithFileUploads;
+use Uiaciel\Corporation\Models\Report;
 use Illuminate\Support\Str;
-use Spatie\PdfToImage\Pdf;
 use Illuminate\Support\Facades\Storage;
-use Uiaciel\Corporation\Models\Announcement;
+use Livewire\WithFileUploads;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
+use Spatie\PdfToImage\Pdf;
 
-class AnnouncementCreate extends Component
+class ReportCreate extends Component
 {
     use WithFileUploads;
 
     public $title;
     public $category;
-    public $content;
-    public $image;
-    public $pdf;
-    public $homepage = 'No';
-    public $status = 'Publish';
     public $datepublish;
-
+    public $status;
+    public $content;
+    public $pdf = null;
     public $pdfPreview;
     public $coverPreview;
     public $storedPdfPath;
     public $storedImagePath;
+    public $hit;
+    public $image;
+    public $errorMessage;
     public $categories;
-
-    protected $rules = [
-        'title' => 'required|min:3',
-        'category' => 'required',
-        'content' => 'required',
-        'image' => 'nullable|image|max:2048',
-        'pdf' => 'nullable|mimes:pdf|max:5120',
-        'homepage' => 'required|in:Yes,No',
-        'status' => 'required|in:Publish,Draf',
-        'datepublish' => 'required|date',
-    ];
 
     public function mount()
     {
+        $this->title = '';
+        $this->category = '';
         $this->datepublish = now()->format('Y-m-d');
-        $this->categories = Announcement::distinct()->pluck('category')->toArray();
+        $this->status = 'Publish';
+        $this->content = '';
+        $this->pdf;
+        $this->hit = '';
+        $this->image = '';
+        $this->categories = Report::distinct()->pluck('category')->toArray();
     }
+
+    protected $rules = [
+        'title' => 'required|max:255',
+        'category' => 'required|max:255',
+        'content' => 'nullable',
+        'image' => 'nullable|image|max:80048',
+        'pdf' => 'required|mimes:pdf|max:80048',
+        'datepublish' => 'required|date',
+        'status' => 'nullable',
+        'hit' => 'nullable',
+    ];
 
     public function updatedPdf()
     {
@@ -74,43 +83,38 @@ class AnnouncementCreate extends Component
         }
     }
 
-    public function save()
+    public function store()
     {
         $this->validate();
 
-        // Save the announcement to the database
-        $announcement = new Announcement();
-        $announcement->title = $this->title;
-        $announcement->slug = Str::slug($this->title);
-        $announcement->category = $this->category;
-        $announcement->content = $this->content;
-        $announcement->homepage = $this->homepage;
-        $announcement->datepublish = $this->datepublish;
-        $announcement->status = $this->status;
+        $report = new Report;
+        $report->title = $this->title;
+        $report->slug = Str::slug($this->title);
+        $report->category = $this->category;
+        $report->datepublish = $this->datepublish;
+        $report->status = $this->status;
 
-        // Move PDF file from temp to reports folder
         if ($this->storedPdfPath) {
-            $newPdfPath = 'announcements/' . basename($this->storedPdfPath);
+            $newPdfPath = 'reports/' . basename($this->storedPdfPath);
             Storage::disk('public')->move($this->storedPdfPath, $newPdfPath);
-            $announcement->pdf = $newPdfPath; // Update database with new path
+            $report->pdf = $newPdfPath;
         }
 
         // Move image file from temp to images folder
         if ($this->storedImagePath) {
-            $newImagePath = 'images/' . basename($this->storedImagePath);
+            $newImagePath = 'reports/' . basename($this->storedImagePath);
             Storage::disk('public')->move($this->storedImagePath, $newImagePath);
-            $announcement->image = $newImagePath; // Update database with new path
+            $report->image = $newImagePath;
         }
 
-        $announcement->save();
+        $report->save();
 
-        session()->flash('message', 'Announcement created successfully.');
-        return $this->redirect(route('admin.announcement.index'), navigate: true);
-
+        session()->flash('message', 'Report created successfully.');
+        return $this->redirect('/admin/reports');
     }
 
     public function render()
     {
-        return view('corporation::livewire.announcement-create');
+        return view('corporation::livewire.report-create');
     }
 }
