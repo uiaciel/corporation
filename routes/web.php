@@ -7,9 +7,11 @@ use Uiaciel\Corporation\Livewire\ReportIndex;
 use Uiaciel\Corporation\Livewire\ReportCreate;
 
 use Uiaciel\Corporation\Http\Controllers\CorporationController;
+use Uiaciel\Corporation\Livewire\StockIndex;
 
 Route::group(['middleware' => config('corporation.middleware', ['web', 'auth']), 'prefix' => config('corporation.route_prefix', 'admin/corporation')], function () {
     Route::get('/announcements', AnnouncementIndex::class)->name('admin.announcement.index');
+    Route::get('/stocks', StockIndex::class)->name('admin.stock.index');
     Route::get('/announcements/create', AnnouncementCreate::class)->name('admin.announcement.create');
 
     Route::get('/reports', ReportIndex::class)->name('admin.report.index');

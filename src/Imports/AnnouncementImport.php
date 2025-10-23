@@ -6,6 +6,7 @@ use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Illuminate\Support\Str;
 use Uiaciel\Corporation\Models\Announcement;
+use Carbon\Carbon;
 
 class AnnouncementImport implements ToModel, WithHeadingRow
 {
@@ -19,7 +20,7 @@ class AnnouncementImport implements ToModel, WithHeadingRow
             'image' => $row['image'],
             'pdf' => $row['pdf'],
             'homepage' => $row['homepage'],
-            'datepublish' => $row['date_publish'],
+            'datepublish' => Carbon::parse($row['datepublish'])->format('Y-m-d'),
             'status' => $row['status'],
         ]);
     }

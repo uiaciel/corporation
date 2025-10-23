@@ -15,7 +15,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Admin</a></li>
-                <li class="breadcrumb-item"><a href="/admin/announcements">Reports</a></li>
+                <li class="breadcrumb-item"><a href="/admin/corporation/reports">Reports</a></li>
                 <li class="breadcrumb-item active">All {{ $titlePage }}</li>
             </ol>
         </nav>
